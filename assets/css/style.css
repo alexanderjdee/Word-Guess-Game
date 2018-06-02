@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "treasure_map_deadhandregular";
+    src: url("fonts/treamd-webfont.woff2") format("woff2"),
+         url("fonts/treamd-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    font-family: "treasure_map_deadhandregular", Arial, sans-serif;
+}
