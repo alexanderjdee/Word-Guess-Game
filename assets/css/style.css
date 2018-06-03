@@ -6,6 +6,28 @@
     font-style: normal;
 }
 
-*{
+* {
     font-family: "treasure_map_deadhandregular", Arial, sans-serif;
+}
+
+body, html{
+    height: 100%;
+    background-image: url("../images/pirate.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#pageTitle{
+    text-align: center;
+    font-size: 175px;
+}
+
+#gameContainer{
+    height: 100%;
+}
+
+#gameText{
+    text-align: center;
+    font-size: 50px;
 }
