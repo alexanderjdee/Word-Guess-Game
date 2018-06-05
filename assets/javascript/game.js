@@ -1,16 +1,19 @@
-// GLOBAL VARIABLES
+// ***GLOBAL VARIABLES***
+
+// Array to story alphabet
 var alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", 
 "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
+// Array to store words for game
 var words = ["BOOTY", "CAPTAIN", "CANNON", "CUTLASS", "GALLEON", "HOOK", "KEELHAUL", 
 "MAROON", "MAST", "MUTINY", "PARROT", "PISTOL", "PLANK", "PLUNDER", "RUM", "SCURVY", "TREASURE"]
 
+//HTML spans to modify
 var winsText = document.getElementById("wins");
 var currentWordText = document.getElementById("currentWord");
 var guessesRemainingText = document.getElementById("guessesRemaining");
 var lettersGuessedText = document.getElementById("lettersGuessed");
 
-//GLOBAL FUNCTIONS
 
 //GAME OBJECT
 var game = {
@@ -23,6 +26,7 @@ var game = {
     guessWasCorrect: false,
     gameOver: false,
 
+    // Set up a new game
     initializeGame: function(){
         this.guessesRemaining = 12;
         guessesRemainingText.textContent = this.guessesRemaining;
@@ -32,10 +36,12 @@ var game = {
         this.setCurrentWord();
     },
     
+    // The game choose a new word
     chooseWord: function(){
         this.word = words[Math.floor(Math.random() * words.length)];
     },
 
+    // Set the current word in an array and replace with '_'
     setCurrentWord: function(){
         this.wordArray = this.word.split("");
         this.currentWord = [];
@@ -51,6 +57,7 @@ var game = {
         currentWordText.textContent = this.currentWord.join(" ");
     },
 
+    // Check if the letter guessed was correct
     letterCheck: function(input){
         var letter = input;
         for(i = 0; i <= this.wordArray.length; i++){
@@ -64,6 +71,7 @@ var game = {
         this.updateGuesses(letter);
     },
 
+    // Update the number of guesses
     updateGuesses: function(guess){
         if(this.guessWasCorrect === false){
             for(i = 0; i <= this.lettersGuessed.length + 1; i++)
@@ -88,6 +96,8 @@ var game = {
         }
     },
 
+    // Check if the user won
+    // If they won, reset the game
     winCheck: function(){
         for(i = 0; i <= this.wordArray.length; i++)
         {
@@ -97,12 +107,14 @@ var game = {
             else if(i === this.wordArray.length){
                 this.wins += 1;
                 winsText.textContent = this.wins;
-                alert("X marks the spot. You won!");
+                alert("X marks the spot. The word was " + this.word + ". You won!");
                 this.initializeGame(); 
             } 
         }
     },
 
+    // Check if the user lost
+    // If the user lost, notify them and reset the game
     loseCheck: function(){
         if(this.guessesRemaining === 0){
             alert("You walked the plank. Try again!");
