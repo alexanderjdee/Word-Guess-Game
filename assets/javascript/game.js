@@ -9,6 +9,7 @@ var words = ["BOOTY", "CAPTAIN", "CANNON", "CUTLASS", "GALLEON", "HOOK", "KEELHA
 "MAROON", "MAST", "MUTINY", "PARROT", "PISTOL", "PLANK", "PLUNDER", "RUM", "SCURVY", "TREASURE"]
 
 //HTML spans to modify
+var gameAnnouncementText = document.getElementById("gameAnnouncement");
 var winsText = document.getElementById("wins");
 var currentWordText = document.getElementById("currentWord");
 var guessesRemainingText = document.getElementById("guessesRemaining");
@@ -28,6 +29,8 @@ var game = {
 
     // Set up a new game
     initializeGame: function(){
+        this.gameOver = false;
+        gameAnnouncementText.textContent = "Press any letter to get started!";
         this.guessesRemaining = 12;
         guessesRemainingText.textContent = this.guessesRemaining;
         this.lettersGuessed = [];
@@ -105,10 +108,11 @@ var game = {
                 break;
             }
             else if(i === this.wordArray.length){
+                this.gameOver = true;
                 this.wins += 1;
                 winsText.textContent = this.wins;
-                alert("X marks the spot. The word was " + this.word + ". You won!");
-                this.initializeGame(); 
+                gameAnnouncementText.textContent = "X marks the spot. You won! Press 'Enter' to continue.";
+                // alert("X marks the spot. The word was " + this.word + ". You won!");
             } 
         }
     },
@@ -117,8 +121,9 @@ var game = {
     // If the user lost, notify them and reset the game
     loseCheck: function(){
         if(this.guessesRemaining === 0){
-            alert("You walked the plank. Try again!");
-            this.initializeGame();
+            this.gameOver = true;
+            gameAnnouncementText.textContent = "You walked the plank! Press 'Enter' to try again.";
+            // alert("You walked the plank. Try again!");
         }  
     }
 }
@@ -131,12 +136,18 @@ document.onkeyup = function(event){
     var userInput = event.key;
     userInput = userInput.toUpperCase();
 
+    if(event.key == "Enter"){
+        game.initializeGame();
+        return;
+    }
+
     for(i = 0; i < alphabet.length; i++)
     {
         if(userInput === alphabet[i]){
             game.letterCheck(userInput);
             break;
         }
+        console.log("test");
     }
 }
 
