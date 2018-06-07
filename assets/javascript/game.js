@@ -136,19 +136,22 @@ document.onkeyup = function(event){
     var userInput = event.key;
     userInput = userInput.toUpperCase();
 
-    if(event.key == "Enter"){
-        game.initializeGame();
-        return;
-    }
-
-    for(i = 0; i < alphabet.length; i++)
-    {
-        if(userInput === alphabet[i]){
-            game.letterCheck(userInput);
-            break;
+    if(game.gameOver === false){
+        for(i = 0; i < alphabet.length; i++)
+        {
+            if(userInput === alphabet[i]){
+                game.letterCheck(userInput);
+                break;
+            }
+            console.log("test");
         }
-        console.log("test");
     }
+    else{
+        if(event.key == "Enter"){
+            game.initializeGame();
+            return;
+        }
+    } 
 }
 
 
