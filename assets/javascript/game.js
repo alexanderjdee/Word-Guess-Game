@@ -1,5 +1,3 @@
-// ***GLOBAL VARIABLES***
-
 // Array to story alphabet
 var alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", 
 "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -20,7 +18,6 @@ var lettersGuessedText = document.getElementById("lettersGuessed");
 var game = {
     wins: 0,
     word: "",
-    wordArray: [],
     currentWord: [],
     guessesRemaining: 0,
     lettersGuessed: [],
@@ -46,26 +43,26 @@ var game = {
 
     // Set the current word in an array and replace with '_'
     setCurrentWord: function(){
-        this.wordArray = this.word.split("");
         this.currentWord = [];
 
-        for(i=0; i < this.wordArray.length; i++){
+        for(i=0; i < this.word.length; i++){
             this.currentWord[i] = "_";
         }
 
         this.updateCurrentWordText();
     },
 
-    updateCurrentWordText: function(index){
+    //Add a space between the blanks for each letter in the selected word
+    updateCurrentWordText: function(){
         currentWordText.textContent = this.currentWord.join(" ");
     },
 
     // Check if the letter guessed was correct
     letterCheck: function(input){
         var letter = input;
-        for(i = 0; i <= this.wordArray.length; i++){
-            if(letter === this.wordArray[i]){
-                this.currentWord[i] = this.wordArray[i];
+        for(i = 0; i <= this.word.length; i++){
+            if(letter === this.word.charAt(i)){
+                this.currentWord[i] = this.word.charAt(i);
                 this.updateCurrentWordText();
                 this.guessWasCorrect = true;             
             }
@@ -102,17 +99,16 @@ var game = {
     // Check if the user won
     // If they won, reset the game
     winCheck: function(){
-        for(i = 0; i <= this.wordArray.length; i++)
+        for(i = 0; i < this.word.length; i++)
         {
-            if(this.currentWord[i] !== this.wordArray[i]){
+            if(this.currentWord[i] !== this.word.charAt(i)){
                 break;
             }
-            else if(i === this.wordArray.length){
+            else if(i === this.word.length - 1){
                 this.gameOver = true;
                 this.wins += 1;
                 winsText.textContent = this.wins;
                 gameAnnouncementText.textContent = "X marks the spot. You won! Press 'Enter' to continue.";
-                // alert("X marks the spot. The word was " + this.word + ". You won!");
             } 
         }
     },
@@ -123,7 +119,6 @@ var game = {
         if(this.guessesRemaining === 0){
             this.gameOver = true;
             gameAnnouncementText.textContent = "You walked the plank! Press 'Enter' to try again.";
-            // alert("You walked the plank. Try again!");
         }  
     }
 }
@@ -143,7 +138,6 @@ document.onkeyup = function(event){
                 game.letterCheck(userInput);
                 break;
             }
-            console.log("test");
         }
     }
     else{
